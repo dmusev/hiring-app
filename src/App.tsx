@@ -1,26 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import Home from './pages/Home';
+import CreateOffer from './pages/CreateOffer';
+import CreateCandidate from './pages/CreateCandidate';
+import ViewOffer from './pages/ViewOffer';
+import Navigation from './components/Common/Navbar';
+import Offers from './components/Offer/OffersList';
+import Candidates from './components/Candidate/CandidatesList';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-function App() {
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Navigation />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/offers" element={<Offers />} />
+        <Route path="/candidates" element={<Candidates />} />
+        <Route path="/candidate/create" element={<CreateCandidate />} />
+        <Route path="/candidate/:id" element={<Candidates />} />
+        <Route path="/offer/create" element={<CreateOffer />} />
+        <Route path="/offer/:id" element={<ViewOffer />} />
+      </Routes>
+    </Router>
   );
-}
-
-export default App;
+};
