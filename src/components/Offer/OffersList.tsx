@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_OFFERS } from '../../graphql/Offer/queries';
 import { Table, Spinner, Container } from 'react-bootstrap';
+import ToastContext from '../../context/ToastContext';
 
-const OffersList: React.FC = () => {
+export default function OffersList() {
     const { loading, error, data } = useQuery(GET_OFFERS);
+    const { handleShowToast } = useContext(ToastContext);
 
     if (loading) {
         return (
@@ -14,8 +16,15 @@ const OffersList: React.FC = () => {
         );
     }
 
-    if (error) return <p>Error :(</p>;
-
+    if (error) {
+        handleShowToast(
+            'Error occured while fetching offers.',
+            {
+                autohide: true,
+                bg: 'danger',
+            }
+        );
+    }
     return (
         <div>
             <h2>Offers List</h2>
@@ -44,5 +53,3 @@ const OffersList: React.FC = () => {
         </div>
     );
 };
-
-export default OffersList;

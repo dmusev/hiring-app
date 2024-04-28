@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
-import { useMutation, useQuery } from '@apollo/client';
+import React, { useState, useContext } from 'react';
+import { useMutation } from '@apollo/client';
+import { Spinner, Container } from 'react-bootstrap';
 import { CREATE_CANDIDATE } from '../../graphql/Candidate/mutations';
+import ToastContext from '../../context/ToastContext';
+import { useNavigate } from 'react-router-dom';
+
 import './Candidate.css';
 
 // interface Candidate {
@@ -16,22 +20,53 @@ import './Candidate.css';
 export default function CandidateForm() {
     const [name, setTitle] = useState('');
     const [email, setStatus] = useState('');
+    const { handleShowToast } = useContext(ToastContext);
     const [createCandidate, { data, loading, error }] = useMutation(CREATE_CANDIDATE);
+    const navigate = useNavigate();
+
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         if (!name || !email) {
-            // TODO: add toast message
-            console.error('Candidate ID is required');
+            handleShowToast(
+                'Please, enter name and email.',
+                {
+                    autohide: true,
+                    bg: 'danger',
+                }
+            );
             return;
         }
         createCandidate({ variables: { name, email } });
     };
 
-    if (loading) return <p>Loading...</p>;
-    // TODO: Add proper error handling, with toast messages 
-    if (error) return <p>Error :(</p>;
-    // TODO: Add proper success handling, with toast messages 
-    if (data) return <p>Candidate Created!</p>;
+    if (loading) {
+        return (
+            <Container className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
+                <Spinner animation="grow" />
+            </Container>
+        );
+    }
+
+    if (error) {
+        handleShowToast(
+            'Something went wrong while creating candidate.',
+            {
+                autohide: true,
+                bg: 'danger',
+            }
+        );
+    };
+
+    if (data) {
+        handleShowToast(
+            'Successfully created a candidate.',
+            {
+                autohide: true,
+                bg: 'success',
+            }
+        );
+        navigate('/candidates'); // Redirects to the candidates list page or any other route
+    };
 
     return (
         <form onSubmit={handleSubmit} className="justify-content-center align-items-center form-container">

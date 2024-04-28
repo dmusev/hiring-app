@@ -4,6 +4,7 @@ import { ApolloProvider } from '@apollo/client';
 import client from './apollo-client';
 import App from './App';
 import './index.css';
+import ToastProvider from './context/ToastProvider';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -11,7 +12,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <App />
+      <ToastProvider>
+        <App />
+      </ToastProvider>
     </ApolloProvider>
   </React.StrictMode>
 );

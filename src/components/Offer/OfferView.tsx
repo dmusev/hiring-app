@@ -1,16 +1,35 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { GET_OFFER } from '../../graphql/Offer/queries';
+import { Spinner, Container } from 'react-bootstrap';
+import ToastContext from '../../context/ToastContext';
 
-const OfferView: React.FC = () => {
+export default function OfferView() {
     const { id } = useParams<{ id: string }>();
+    const { handleShowToast } = useContext(ToastContext);
+
     const { loading, error, data } = useQuery(GET_OFFER, {
         variables: { id },
     });
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error :(</p>;
+    if (loading) {
+        return (
+            <Container className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
+                <Spinner animation="grow" />
+            </Container>
+        );
+    }
+
+    if (error) {
+        handleShowToast(
+            'Error occured while fetching offers.',
+            {
+                autohide: true,
+                bg: 'danger',
+            }
+        );
+    }
 
     return (
         <div>
@@ -21,5 +40,3 @@ const OfferView: React.FC = () => {
         </div>
     );
 };
-
-export default OfferView;

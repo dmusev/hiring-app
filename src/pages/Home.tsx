@@ -2,7 +2,7 @@ import React from 'react';
 import { useQuery } from '@apollo/client';
 import { Container, Row, Col } from 'react-bootstrap';
 import HomeCard from '../components/Common/HomeCard';
-import { BsPersonRolodex, BsHourglassSplit, BsFillArchiveFill } from 'react-icons/bs';
+import { BsPersonRolodex, BsFillArchiveFill } from 'react-icons/bs';
 import { GET_TOTAL_CANDIDATES } from '../graphql/Candidate/queries';
 import { GET_TOTAL_OFFERS } from '../graphql/Offer/queries';
 import './Home.css';

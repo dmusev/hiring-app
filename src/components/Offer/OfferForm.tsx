@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { CREATE_OFFER } from '../../graphql/Offer/mutations';
 import { GET_CANDIDATES } from '../../graphql/Candidate/queries';
-import './Offer.css';
+import { Spinner, Container } from 'react-bootstrap';
+import ToastContext from '../../context/ToastContext';
+import { useNavigate } from 'react-router-dom';
 
 interface Candidate {
     id: any;
@@ -14,29 +16,60 @@ interface CandidatesData {
     candidates: Candidate[];
 }
 
-const OfferForm: React.FC = () => {
+export default function OfferForm() {
     const [title, setTitle] = useState('');
     const [status, setStatus] = useState('');
     const [salary, setSalary] = useState(0);
     const [candidateId, setSelectedCandidate] = useState('');
-    const [createOffer, { data, loading, error }] = useMutation(CREATE_OFFER);
+    const [createOffer, { data, loading, error: offersError }] = useMutation(CREATE_OFFER);
     const { data: candidatesData, error: candidatesError } = useQuery<CandidatesData>(GET_CANDIDATES);
+    const { handleShowToast } = useContext(ToastContext);
+    const navigate = useNavigate();
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         if (!candidateId) {
-            // TODO: add toast message
-            console.error('Candidate ID is required');
+            handleShowToast(
+                'Please, select a candidate.',
+                {
+                    autohide: true,
+                    bg: 'danger',
+                }
+            );
             return;
         }
         createOffer({ variables: { salary, title, status, candidateId } });
     };
 
-    if (loading) return <p>Loading...</p>;
-    // TODO: Add proper error handling, with toast messages 
-    if (error) return <p>Error :(</p>;
-    // TODO: Add proper success handling, with toast messages 
-    if (data) return <p>Offer Created!</p>;
+    if (loading) {
+        return (
+            <Container className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
+                <Spinner animation="grow" />
+            </Container>
+        );
+    }
+
+    if (offersError || candidatesError) {
+        handleShowToast(
+            offersError ? 'Something went wrong while creating offer..' : 'Something went wrong while fetching candidates.',
+            {
+                autohide: true,
+                bg: 'danger',
+            }
+        );
+    }
+
+    if (data) {
+        handleShowToast(
+            'Successfully created a candidate.',
+            {
+                autohide: true,
+                bg: 'success',
+            }
+        );
+        navigate('/offers'); // Redirects to the candidates list page or any other route
+    };
+
 
     return (
         <form onSubmit={handleSubmit} className="justify-content-center align-items-center form-container">
@@ -68,7 +101,6 @@ const OfferForm: React.FC = () => {
                     className="form-control"
                 />
             </div>
-            {/* TODO: Add no candidate selected error handling */}
             <div className="form-group">
                 <label>Candidate:</label>
                 <select
@@ -88,5 +120,3 @@ const OfferForm: React.FC = () => {
         </form >
     );
 };
-
-export default OfferForm;

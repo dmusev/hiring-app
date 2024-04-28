@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useQuery } from '@apollo/client';
 import { Table, Spinner, Container } from 'react-bootstrap';
 import { GET_CANDIDATES } from '../../graphql/Candidate/queries';
+import ToastContext from '../../context/ToastContext';
 
 export default function CandidatesList() {
     const { loading, error, data } = useQuery(GET_CANDIDATES);
+    const { handleShowToast } = useContext(ToastContext);
 
     if (loading) {
         return (
@@ -14,8 +16,15 @@ export default function CandidatesList() {
         );
     }
 
-    // TODO: Add proper error handling, with toast messages
-    if (error) return <p>Error :(</p>;
+    if (error) {
+        handleShowToast(
+            'Error occured while fetching candidates.',
+            {
+                autohide: true,
+                bg: 'danger',
+            }
+        );
+    }
 
     return (
         <div>

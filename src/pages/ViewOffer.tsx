@@ -1,7 +1,7 @@
 import React from 'react';
 import OfferView from '../components/Offer/OfferView';
 
-const ViewOffer: React.FC = () => {
+export default function ViewOffer() {
     return (
         <div className="container mt-3">
             <h1>Offer Details</h1>
@@ -9,5 +9,3 @@ const ViewOffer: React.FC = () => {
         </div>
     );
 };
-
-export default ViewOffer;
