@@ -5,8 +5,7 @@ import HomeCard from '../components/Common/HomeCard';
 import { BsPersonRolodex, BsHourglassSplit, BsFillArchiveFill } from 'react-icons/bs';
 import { GET_TOTAL_CANDIDATES } from '../graphql/Candidate/queries';
 import { GET_TOTAL_OFFERS } from '../graphql/Offer/queries';
-
-import './Home.css'; // Import your custom CSS or add these styles in your global stylesheet
+import './Home.css';
 
 export default function Home() {
     const { loading: candidatesLoading, error: candidatesError, data: candidatesData } = useQuery(GET_TOTAL_CANDIDATES);

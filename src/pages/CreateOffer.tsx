@@ -1,10 +1,10 @@
 import React from 'react';
-import CandidateForm from '../components/Candidate/CandidateForm';
+import OfferForm from '../components/Offer/OfferForm';
 
 export default function CreateOffer() {
     return (
         <div className="container mt-3">
-            <CandidateForm />
+            <OfferForm />
         </div>
     );
 };
