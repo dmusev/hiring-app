@@ -67,7 +67,7 @@ export default function OfferForm() {
                 bg: 'success',
             }
         );
-        navigate('/offers'); // Redirects to the candidates list page or any other route
+        navigate('/offers'); // Redirects to the offers page
     };
 
 

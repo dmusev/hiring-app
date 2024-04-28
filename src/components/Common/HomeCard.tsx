@@ -1,7 +1,6 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
 import { IconType } from 'react-icons';
-import './HomeCard.css';
 
 interface HomeCardProps {
     title: string;

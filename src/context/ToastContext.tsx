@@ -12,9 +12,9 @@ const ToastContext = React.createContext<ToastContextValue>({
     handleCloseToast: () => { },
 });
 
-export default ToastContext;
-
 export interface ToastContextValue {
     handleShowToast: (message: string, options?: ToastOptions) => void;
     handleCloseToast: () => void;
 }
+
+export default ToastContext;

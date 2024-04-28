@@ -7,16 +7,6 @@ import { useNavigate } from 'react-router-dom';
 
 import './Candidate.css';
 
-// interface Candidate {
-//     id: any;
-//     name: string;
-//     email: string;
-// }
-
-// interface CandidatesData {
-//     candidates: Candidate[];
-// }
-
 export default function CandidateForm() {
     const [name, setTitle] = useState('');
     const [email, setStatus] = useState('');
@@ -41,7 +31,7 @@ export default function CandidateForm() {
 
     if (loading) {
         return (
-            <Container className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
+            <Container className="d-flex justify-content-center align-items-center">
                 <Spinner animation="grow" />
             </Container>
         );
@@ -65,7 +55,7 @@ export default function CandidateForm() {
                 bg: 'success',
             }
         );
-        navigate('/candidates'); // Redirects to the candidates list page or any other route
+        navigate('/candidates'); // Redirects to the candidates list page
     };
 
     return (
