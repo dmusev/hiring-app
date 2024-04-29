@@ -4,15 +4,23 @@ import { Spinner, Container } from 'react-bootstrap';
 import { CREATE_CANDIDATE } from '../../graphql/Candidate/mutations';
 import ToastContext from '../../context/ToastContext';
 import { useNavigate } from 'react-router-dom';
+import { validateEmail } from '../../utils/utils'; // Import the utility function
 
 import './Candidate.css';
 
 export default function CandidateForm() {
     const [name, setTitle] = useState('');
-    const [email, setStatus] = useState('');
+    const [email, setEmail] = useState('');
+    const [emailValid, setEmailValid] = useState(true);
     const { handleShowToast } = useContext(ToastContext);
     const [createCandidate, { data, loading, error }] = useMutation(CREATE_CANDIDATE);
     const navigate = useNavigate();
+
+    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newEmail = e.target.value;
+        setEmail(newEmail);
+        setEmailValid(validateEmail(newEmail));
+    };
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
@@ -26,6 +34,18 @@ export default function CandidateForm() {
             );
             return;
         }
+
+        if (!emailValid) {
+            handleShowToast(
+                'Please, enter a valid email.',
+                {
+                    autohide: true,
+                    bg: 'danger',
+                }
+            );
+            return;
+        }
+
         createCandidate({ variables: { name, email } });
     };
 
@@ -75,7 +95,7 @@ export default function CandidateForm() {
                 <input
                     type="text"
                     value={email}
-                    onChange={e => setStatus(e.target.value)}
+                    onChange={handleEmailChange}
                     className="form-control"
                 />
             </div>
