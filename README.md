@@ -42,3 +42,9 @@ Follow these steps to set up your application using Docker:
    ```
 
 4. Application should be available at: **[http://localhost:3001](http://localhost:3001)**
+
+5. **Running tests for the application**
+
+   ```bash
+   yarn test
+   ```

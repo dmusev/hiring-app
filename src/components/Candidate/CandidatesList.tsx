@@ -26,6 +26,16 @@ export default function CandidatesList() {
         );
     }
 
+    // Check if there are no candidates and render temporary screen message
+    if (!data || !data.candidates || data.candidates.length === 0) {
+        return (
+            <Container className="text-center mt-5">
+                <h2>No Candidates Found</h2>
+                <p>No data is available at the moment. Please check back later.</p>
+            </Container>
+        );
+    }
+
     return (
         <div>
             <h2>Candidates List</h2>

@@ -17,6 +17,8 @@ export default function OffersList() {
     }
 
     if (error) {
+        console.error("An error occurred:", error.message);
+
         handleShowToast(
             'Error occured while fetching offers.',
             {
@@ -25,6 +27,18 @@ export default function OffersList() {
             }
         );
     }
+
+    // Check if there are no candidates and render temporary screen message
+    if (!data || !data.offers || data.offers.length === 0) {
+        return (
+            <Container className="text-center mt-5">
+                <h2>No Offers Found</h2>
+                <p>No data is available at the moment. Please check back later.</p>
+            </Container>
+        );
+    }
+
+
     return (
         <div>
             <h2>Offers List</h2>

@@ -14,7 +14,7 @@ export default function HomeCard({ title, amount, Icon }: HomeCardProps) {
             <Card.Body>
                 <Card.Title className="mb-2 text-muted">{title.toUpperCase()}</Card.Title>
                 <Card.Text>
-                    <Icon className="mb-1" />
+                    <Icon className="mb-1" data-testid="icon" />
                     {amount}
                 </Card.Text>
             </Card.Body>
