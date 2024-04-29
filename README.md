@@ -40,3 +40,5 @@ Follow these steps to set up your application using Docker:
    ```bash
    docker ps
    ```
+
+4. Application should be available at: **[http://localhost:3001](http://localhost:3001)**
