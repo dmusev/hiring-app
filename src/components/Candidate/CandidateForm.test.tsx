@@ -31,7 +31,7 @@ describe('CandidateForm Component', () => {
 
         render(
             <MockedProvider mocks={[createCandidateMock]} addTypename={false}>
-                <ToastContext.Provider value={{ handleShowToast: mockHandleShowToast }}>
+                <ToastContext.Provider value={{ handleShowToast: mockHandleShowToast, handleCloseToast: () => { } }}>
                     <BrowserRouter>
                         <CandidateForm />
                     </BrowserRouter>

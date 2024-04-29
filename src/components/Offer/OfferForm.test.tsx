@@ -57,7 +57,7 @@ describe('OfferForm Component', () => {
     beforeEach(() => {
         render(
             <MockedProvider mocks={[candidatesMock, createOfferMock]} addTypename={false}>
-                <ToastContext.Provider value={{ handleShowToast: mockHandleShowToast }}>
+                <ToastContext.Provider value={{ handleShowToast: mockHandleShowToast, handleCloseToast: () => { } }}>
                     <BrowserRouter>
                         <OfferForm />
                     </BrowserRouter>
